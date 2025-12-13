@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberCon25 - Premier Cybersecurity Conference by Cyber Security Club - Uttara University</title>
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/images/favicon/site.webmanifest">
+    <link rel="shortcut icon" href="assets/images/favicon/favicon.ico">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.php">
+                <img src="assets/images/logo/CyberCon.png" alt="CyberCon 2025" class="navbar-logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">HOME</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">ABOUT</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#speakers">SPEAKERS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#schedule">SCHEDULE</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#villages">VILLAGES</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#sponsors">SPONSORS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">CONTACT</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <!-- Hero Slideshow Background -->
+        <div class="hero-slideshow-bg">
+            <div class="slideshow-wrapper">
+                <div class="slide active">
+                    <img src="assets/images/Gallery/event.jpg" alt="CyberCon 2025">
+                </div>
+                <div class="slide">
+                    <img src="assets/images/Gallery/event1.jpg" alt="CyberCon Event">
+                </div>
+                <div class="slide">
+                    <img src="assets/images/Gallery/event2.jpg" alt="Conference Hall">
+                </div>
+                <div class="slide">
+                    <img src="assets/images/Gallery/event3.jpg" alt="Speakers">
+                </div>
+                <div class="slide">
+                    <img src="assets/images/Gallery/event4.jpg" alt="Previous Event">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Hero Overlay Content -->
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Main Hero Text -->
+                    <h1 class="hero-main-title">CyberCon25</h1>
+                    
+                    <!-- Event Details -->
+                    <div class="hero-event-info">
+                        <p class="hero-subtitle">Leading Cybersecurity Conference in Uttara University.</p>
+                        <p class="hero-dates">Conference Date: 27th Nov, 2025 | Time: 8:00 AM</p>
+                        <p class="hero-dates">Venue: Multi Purpose Hall, Uttara University</p>
+                    </div>
+                    
+                    <!-- Social Links -->
+                    <div class="hero-social">
+                        <p class="social-label">Follow Us:</p>
+                        <div class="social-icons">
+                            <a href="https://facebook.com/csc.uu.bd" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="https://www.linkedin.com/company/cscuu/?viewAsMember=true" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://discord.gg/N83SjBHjzG" target="_blank" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                            <a href="mailto:cybersecurity@club.uttara.ac.bd" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Theme Section -->
+    <section id="theme" class="theme-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="section-title">CyberCon25 Theme</h2>
+                    <h3 class="theme-title">NEXT-GEN OFFENSIVE</h3>
+                    <p class="theme-description">
+                        Exploring the frontier of AI-powered security, bug bounty, and zero-trust architecture. 
+                        As cyber threats evolve with machine learning and automation, attackers & defenders must adapt with cutting-edge 
+                        strategies and innovative solutions. Join us as we dive deep into the future of cybersecurity.
+                    </p>
+                    <div class="theme-highlights">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="highlight-card">
+                                    <i class="fas fa-brain"></i>
+                                    <h4>AI & ML in Security</h4>
+                                    <p>Defending against and leveraging artificial intelligence</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="highlight-card">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <h4>Zero Trust</h4>
+                                    <p>Implementing next-generation security frameworks</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="highlight-card">
+                                    <i class="fas fa-atom"></i>
+                                    <h4>Bug Bounty</h4>
+                                    <p>Preparing for Bug Bounty programs</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- What to Expect Section -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <h3 class="about-subtitle text-center mb-4" style="color: var(--accent-orange);">What to Expect</h3>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="expectation-card">
+                        <div class="expectation-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h4>CTF Competitions</h4>
+                        <p>Test your skills in fast-paced Capture The Flag challenges. Compete with the best hackers, solve complex cybersecurity puzzles, and win amazing prizes while showcasing your problem-solving abilities in real-world scenarios.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="expectation-card">
+                        <div class="expectation-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <h4>Expert-Led Sessions</h4>
+                        <p>Learn from distinguished security researchers, bug hunters, and industry professionals. Topics include AI-powered security, ethical hacking, penetration testing, modern cyber warfare, bug bounty methodologies, and practical reconnaissance techniques.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="expectation-card">
+                        <div class="expectation-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h4>Career Insights & Opportunities</h4>
+                        <p>Explore career pathways in the fast-growing cybersecurity field. Gain insights from industry professionals on how today's skills translate into tomorrow's opportunities in ethical hacking, security research, and digital defense.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About CyberCon25 Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="section-title text-center">About CyberCon25</h2>
+                    <div class="about-content">
+                        <div class="row align-items-center mb-5">
+                            <div class="col-lg-6">
+                                <div class="about-image-wrapper">
+                                    <img src="assets/images/Gallery/event.jpg" alt="CyberCon25 Event" class="about-main-image">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="about-text">
+                                    <h3 class="about-subtitle">Leading Cybersecurity Conference at Uttara University</h3>
+                                    <p>CyberCon25, proudly organized by the Cyber Security Club from the Department of CSE at Uttara University, is set to take place on <strong>November 29th, 2025</strong>, from <strong>8:00 AM onwards</strong> at the Multi Purpose Hall. Building on the remarkable success of previous editions—CyberCon 2023 with 130+ participants and CyberCon 2024 which drew over 300 students—this year's conference promises to be the most impactful yet.</p>
+                                    <p>More than just a conference, CyberCon has become an annual tradition at Uttara University, reflecting our commitment to innovation, career readiness, and building a safer digital Bangladesh. The event begins with a recitation from the Holy Quran and the national anthem, setting an inspiring and respectful tone.</p>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="row mb-5">
+                            <div class="col-12">
+                                <h3 class="about-subtitle text-center mb-4">Distinguished Guests & Leadership</h3>
+                            </div>
+                            <div class="col-lg-6 col-md-6 mb-4">
+                                <div class="expectation-card">
+                                    <div class="expectation-icon">
+                                        <i class="fas fa-university"></i>
+                                    </div>
+                                    <h4>Academic Excellence</h4>
+                                    <p>CyberCon features our esteemed Vice-Chancellor, who inspires students with motivational insights on innovation and national development, alongside departmental leadership who emphasize cybersecurity's interconnectedness with all facets of Computer Science and Engineering.</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 mb-4">
+                                <div class="expectation-card">
+                                    <div class="expectation-icon">
+                                        <i class="fas fa-user-shield"></i>
+                                    </div>
+                                    <h4>Industry Experts</h4>
+                                    <p>Hear from renowned keynote speakers including CISOs, security researchers with extensive bug hunting experience, ethical hackers, and CTF players who share their methodologies, discoveries, and career journeys in the cybersecurity field.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-5">
+                            <div class="col-lg-8 mx-auto">
+                                <div class="legacy-box">
+                                    <h3 class="about-subtitle text-center">Our Legacy & Evolution</h3>
+                                    <p class="text-center"><strong>CyberCon 2023</strong> marked our beginning with 130+ engaged students. The seminar featured sessions on practical recon techniques, bug bounty methodologies, and modern warfare's role in cybersecurity. Speakers like Asif Farabi and Rakibul Hasan Mishu provided invaluable insights, while academic leaders highlighted the field's importance.</p>
+                                    <p class="text-center"><strong>CyberCon 2024</strong> transformed into Uttara University's largest cybersecurity event, attracting over 300 students. The event expanded to include CTF competitions, hacking workshops, career insight sessions, and global impact talks connecting cybersecurity to the SDGs. It became a platform for learning, collaboration, and career development.</p>
+                                    <p class="text-center"><strong>CyberCon 2025</strong> builds on this momentum, introducing next-generation topics like AI-powered security, zero-trust architecture, and advanced offensive techniques. Held annually in December during Cybersecurity Awareness Month, CyberCon has become a cornerstone event reflecting Uttara University's commitment to preparing students for the digital challenges of tomorrow.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-5">
+                            <div class="col-12">
+                                <h3 class="about-subtitle text-center mb-4">Why Attend CyberCon?</h3>
+                            </div>
+                            <div class="col-lg-3 col-md-6 mb-4">
+                                <div class="expectation-card">
+                                    <div class="expectation-icon">
+                                        <i class="fas fa-graduation-cap"></i>
+                                    </div>
+                                    <h4>Practical Skills</h4>
+                                    <p>Gain hands-on experience and practical knowledge that bridges academic learning with industry practices in ethical hacking and cybersecurity.</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 mb-4">
+                                <div class="expectation-card">
+                                    <div class="expectation-icon">
+                                        <i class="fas fa-network-wired"></i>
+                                    </div>
+                                    <h4>Networking</h4>
+                                    <p>Connect with fellow enthusiasts, professionals, and mentors. Build lasting relationships within Bangladesh's growing cybersecurity community.</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 mb-4">
+                                <div class="expectation-card">
+                                    <div class="expectation-icon">
+                                        <i class="fas fa-briefcase"></i>
+                                    </div>
+                                    <h4>Career Pathways</h4>
+                                    <p>Discover career opportunities in the fast-growing cybersecurity field. Learn how your skills can lead to roles in ethical hacking, security research, and more.</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 mb-4">
+                                <div class="expectation-card">
+                                    <div class="expectation-icon">
+                                        <i class="fas fa-project-diagram"></i>
+                                    </div>
+                                    <h4>Showcase Projects</h4>
+                                    <p>Present your cybersecurity projects, get feedback from experts, and learn from peer innovations in digital defense and security research.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Speakers Section -->
+    <section id="speakers" class="speakers-section">
+        <div class="container">
+            <h2 class="section-title text-center">Featured Speakers</h2>
+            <div class="row">
+                <?php
+                $speakers = [
+                    [
+                        'name' => 'Shahee Mirza',
+                        'title' => 'Cybersecurity Entrepreneur',
+                        'company' => 'CISO',
+                        'image' => 'https://media.licdn.com/dms/image/v2/D5603AQGUCGrhGpDZbw/profile-displayphoto-scale_200_200/B56ZpdhGcaJ4AY-/0/1762505552108?e=1764806400&v=beta&t=UsrFIa_zc_UqgYo2fQGkc9OOkaB5hMLeG5uUSzAYiOk',
+                        'linkedin' => 'https://www.linkedin.com/in/shaheemirza/'
+                    ],
+                    [
+                        'name' => 'A. B. M. Ahasan Ullah',
+                        'title' => 'Vice President',
+                        'company' => 'Al-Arafah Islami Bank PLC',
+                        'image' => 'https://media.licdn.com/dms/image/v2/C4D03AQE0sy318vuOLw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1517512087592?e=1764806400&v=beta&t=fDWYfpORy3IZRMb7Ry9ZVUCcyyRB-2dnDLFqjfOjWVA',
+                        'linkedin' => 'https://www.linkedin.com/in/ahasanullah/'
+                    ],
+                    [
+                        'name' => 'Mohammad Abdullah',
+                        'title' => 'AppSec Engineer',
+                        'company' => 'Augmedix',
+                        'image' => 'https://media.licdn.com/dms/image/v2/D5603AQEOpNAwb-CVFQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1724986557235?e=1764806400&v=beta&t=WCAuPp3d4LjP9LFvyIfvgc7oJLnCqtE0iTWDgyJ2jI0',
+                        'linkedin' => 'https://www.linkedin.com/in/mohammad-abdullah/'
+                    ],
+                    [
+                        'name' => 'Prial Islam',
+                        'title' => 'Red Team Member',
+                        'company' => 'Synack Red Team',
+                        'image' => 'https://media.licdn.com/dms/image/v2/D5603AQFruNOs5X7jfg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1664840776438?e=1764806400&v=beta&t=SvBpMPXHUbaXR2w2XCbzNZC2XeMC6aSV4tmOmBG8ULc',
+                        'linkedin' => 'https://www.linkedin.com/in/0xprial/'
+                    ],
+                    [
+                        'name' => 'Hasibul Hasan Shawon',
+                        'title' => 'Associate Security Consultant',
+                        'company' => 'SecureLayer7 | Synack | SecMiners',
+                        'image' => 'https://media.licdn.com/dms/image/v2/D4D03AQEWlyD23YOGOg/profile-displayphoto-crop_800_800/B4DZiaTBkUH8AI-/0/1754935338345?e=1764806400&v=beta&t=Ftl6EFOD9L1ly2l2kkmL4tiOxGlmlZmIxOn8IN3Tc0A',
+                        'linkedin' => 'https://www.linkedin.com/in/saiyan0x01/'
+                    ],
+                    [
+                        'name' => 'Md Asif Hossain',
+                        'title' => 'Security Researcher',
+                        'company' => 'HackerOne | BugCrowd | Yogosha',
+                        'image' => 'https://media.licdn.com/dms/image/v2/D5603AQFV5JuQ286Kzw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1693626818532?e=1764806400&v=beta&t=rsy6erreFcQTfTJbvgrMzH6r20xDKstAk2vhMDd55D8',
+                        'linkedin' => 'https://www.linkedin.com/in/0x0asif/'
+                    ],
+                    [
+                        'name' => 'Alwoares Naeem',
+                        'title' => 'CEO',
+                        'company' => 'ZeroRisk Cyber Security',
+                        'image' => 'https://media.licdn.com/dms/image/v2/D5603AQElaU02UzvLyg/profile-displayphoto-shrink_200_200/B56ZRa36cLGQAY-/0/1736691395868?e=1764806400&v=beta&t=qmFfMNZe--QbuAOVtLciYV7U8Yy958FdG66BQkia1mU',
+                        'linkedin' => 'https://www.linkedin.com/in/a1woares/'
+                    ],
+                    [
+                        'name' => 'Sadikul Islam Akash',
+                        'title' => 'Red Team Researcher',
+                        'company' => 'BEETLES CYBER SECURITY',
+                        'image' => 'https://media.licdn.com/dms/image/v2/D5603AQE0E0N9NGPGpQ/profile-displayphoto-scale_200_200/B56Ze8dBEcH8AY-/0/1751213413380?e=1764806400&v=beta&t=3pm9LdvUsJDy8q6Ro6d2eUnowrQrGP627Sm0jHt0LyI',
+                        'linkedin' => 'https://www.linkedin.com/in/mdsadikulislam/'
+                    ]
+                ];
+                
+                foreach ($speakers as $speaker) : ?>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="speaker-card">
+                        <div class="speaker-image">
+                            <img src="<?php echo htmlspecialchars($speaker['image']); ?>" alt="<?php echo htmlspecialchars($speaker['name']); ?>">
+                            <div class="speaker-overlay">
+                                <div class="social-links">
+                                    <a href="<?php echo htmlspecialchars($speaker['linkedin']); ?>" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="speaker-info">
+                            <h4><?php echo htmlspecialchars($speaker['name']); ?></h4>
+                            <p class="speaker-title"><?php echo htmlspecialchars($speaker['title']); ?></p>
+                            <p class="speaker-company"><?php echo htmlspecialchars($speaker['company']); ?></p>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+    <!-- Villages Section -->
+    <section id="villages" class="villages-section">
+        <div class="container">
+            <h2 class="section-title text-center">Interactive Villages</h2>
+            <p class="section-subtitle text-center">Hands-on Learning Experiences</p>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="village-card">
+                        <div class="village-icon">
+                            <i class="fas fa-bug"></i>
+                        </div>
+                        <h4>Bug Bounty Village</h4>
+                        <p>Learn from top bug bounty hunters and practice finding vulnerabilities in real-world applications.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="village-card">
+                        <div class="village-icon">
+                            <i class="fas fa-flag"></i>
+                        </div>
+                        <h4>Crack The Flag Village</h4>
+                        <p>Dive into IoT security, reverse engineering, and hardware exploitation techniques.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="village-card">
+                        <div class="village-icon">
+                            <i class="fas fa-user-secret"></i>
+                        </div>
+                        <h4>Red Team Village</h4>
+                        <p>Offensive security tactics, adversary simulation, and penetration testing workshops.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Schedule Section -->
+    <section id="schedule" class="schedule-section">
+        <div class="container">
+            <h2 class="section-title text-center">Event Schedule</h2>
+            <div class="schedule-tabs">
+                <ul class="nav nav-pills justify-content-center mb-5" id="scheduleTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="day1-tab" data-bs-toggle="pill" data-bs-target="#day1">Day 1 - Nov 26</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="day2-tab" data-bs-toggle="pill" data-bs-target="#day2">Day 2 - Nov 27</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="scheduleTabContent">
+                    <div class="tab-pane fade show active" id="day1">
+                        <div class="schedule-item">
+                            <div class="schedule-time">01:30 PM</div>
+                            <div class="schedule-content">
+                                <h4>CTF Competition</h4>
+                                <p class="speaker-name">Jeopardy-Style</p>
+                                <p>Venue : 511, 514 | 5th Floor | Uttara University</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="day2">
+                        <div class="schedule-item">
+                            <div class="schedule-time">08:00 AM</div>
+                            <div class="schedule-content">
+                                <h4>Conference</h4>
+                                <p class="speaker-name">Multi Purpose Room, Uttara University</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sponsors Section -->
+    <section id="sponsors" class="sponsors-section">
+        <div class="container">
+            <h2 class="section-title text-center">Our Sponsors</h2>
+            <p class="section-subtitle text-center">Thank you to our amazing partners</p>
+            
+            <div class="sponsor-tier">
+                <h3 class="tier-title">Giveaway Sponsors</h3>
+                <div class="row justify-content-center">
+                    <div class="col-lg-3 col-md-4 col-6 mb-4">
+                        <div class="sponsor-card platinum">
+                            <img src="assets/images/sponsor/Gotmyhost Logo Raw.png" alt="Sponsor" class="img-fluid">
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-6 mb-4">
+                        <div class="sponsor-card platinum">
+                            <img src="assets/images/sponsor/Mainlogo-fotor-2025112410450.png" style="max-width: 70%; height: auto;" alt="Sponsor" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Section -->
+    <section id="register" class="register-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="section-title">Register for CyberCon25</h2>
+                    <p class="section-subtitle">Secure your spot at the premier cybersecurity event</p>
+                </div>
+            </div>
+            <div class="row mt-5 justify-content-center">
+                <!-- Early Bird Pass -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="pricing-card featured">
+                        <div class="pricing-header">
+                            <span class="badge bg-danger mb-2">🎁 First 200 Only!</span>
+                            <h3>Student Pass (Early Bird)</h3>
+                            <div class="price">৳200 BDT</div>
+                            <p>Limited Time Offer</p>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i> <strong>Exclusive CyberCon 2025 T-shirt</strong></li>
+                            <li><i class="fas fa-check"></i> Full conference access</li>
+                            <li><i class="fas fa-check"></i> CTF participation</li>
+                            <li><i class="fas fa-check"></i> Workshop materials</li>
+                            <li><i class="fas fa-check"></i> Breakfast & Lunch</li>
+                            <li><i class="fas fa-check"></i> Networking opportunities</li>
+                            <li><i class="fas fa-check"></i> Certificate of attendance</li>
+                        </ul>
+                        <a href="#registration-form" class="btn btn-pricing" onclick="showRegistrationForm('Early Bird')">Register Now</a>
+                    </div>
+                </div>
+
+                <!-- Regular Pass -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h3>Regular Pass</h3>
+                            <div class="price">৳300 BDT</div>
+                            <p>Standard admission ticket</p>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i> Full conference access</li>
+                            <li><i class="fas fa-check"></i> Hands-on workshops</li>
+                            <li><i class="fas fa-check"></i> CTF participation</li>
+                            <li><i class="fas fa-check"></i> Workshop materials</li>
+                            <li><i class="fas fa-check"></i> Breakfast & Lunch</li>
+                            <li><i class="fas fa-check"></i> Refreshments</li>
+                            <li><i class="fas fa-check"></i> Certificate of attendance</li>
+                            <li><i class="fas fa-check"></i> Networking events</li>
+                        </ul>
+                        <a href="#registration-form" class="btn btn-pricing" onclick="showRegistrationForm('Regular')">Select Plan</a>
+                    </div>
+                </div>
+
+                <!-- VIP Pass -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <span class="badge bg-warning text-dark mb-2">⭐ Premium</span>
+                            <h3>VIP Pass</h3>
+                            <div class="price">৳500 BDT</div>
+                            <p>All-inclusive experience</p>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i> <strong>Priority seating</strong></li>
+                            <li><i class="fas fa-check"></i> <strong>Exclusive VIP lounge access</strong></li>
+                            <li><i class="fas fa-check"></i> <strong>CyberCon merchandise kit</strong></li>
+                            <li><i class="fas fa-check"></i> <strong>Networking with speakers</strong></li>
+                            <li><i class="fas fa-check"></i> Certificate of participation</li>
+                            <li><i class="fas fa-check"></i> Premium refreshments</li>
+                            <li><i class="fas fa-check"></i> Early workshop registration</li>
+                            <li><i class="fas fa-check"></i> Full conference access</li>
+                            <li><i class="fas fa-check"></i> T-shirt, notebook, pen</li>
+                        </ul>
+                        <a href="#registration-form" class="btn btn-pricing" onclick="showRegistrationForm('VIP')">Get VIP Access</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Form Section -->
+    <section id="registration-form" class="registration-form-section" style="display: none;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="registration-form-container">
+                        <button type="button" class="form-close-btn" onclick="hideRegistrationForm()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        
+                        <h2 class="form-title">Student Registration - CyberCon25</h2>
+                        <p class="form-subtitle">Complete your registration to secure your spot</p>
+
+                        <div id="form-alert-container"></div>
+
+                        <form id="cyberconRegistrationForm" method="POST" action="action.php" onsubmit="return submitCyberConRegistration(event)">
+                            <input type="hidden" name="action" value="register">
+                            <input type="hidden" id="regTimestamp" name="regTimestamp">
+                            <input type="hidden" id="ticketPrice" name="ticketPrice" value="200 BDT">
+                            <input type="hidden" id="selectedTicketType" name="ticketType" value="Early Bird">
+                            
+                            <div class="row">
+                                <div class="col-12 mb-4">
+                                    <div class="alert alert-success">
+                                        <strong>Selected Pass:</strong> <span id="selectedPassDisplay">Student Pass (Early Bird)</span> - 
+                                        <strong>Price:</strong> <span id="selectedPriceDisplay">৳200 BDT</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="fullName" class="form-label">Full Name *</label>
+                                    <input type="text" class="form-control" id="fullName" name="fullName" required 
+                                           pattern="[A-Za-z\s]+" title="Only letters and spaces allowed" maxlength="50"
+                                           oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')">
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="studentId" class="form-label">Student ID *</label>
+                                    <input type="text" class="form-control" id="studentId" name="studentId" required
+                                           placeholder="22330814XX" pattern="[0-9]+" title="Only digits allowed" maxlength="15"
+                                           oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="university" class="form-label">University *</label>
+                                    <input type="text" class="form-control" id="university" name="university" 
+                                           value="Uttara University" readonly>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="department" class="form-label">Department *</label>
+                                    <input type="text" class="form-control" id="department" name="department" required
+                                           placeholder="e.g., CSE, EEE, CIVIL" maxlength="50">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="batch" class="form-label">Batch *</label>
+                                    <input type="text" class="form-control" id="batch" name="batch" required
+                                           placeholder="e.g., 60, 61, 62" maxlength="10">
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="section" class="form-label">Section *</label>
+                                    <input type="text" class="form-control" id="section" name="section" required
+                                           placeholder="e.g., A, B, C" maxlength="10">
+                                </div>
+                            </div>
+
+                             <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">Varsity Email *</label>
+                                    <input type="email" class="form-control" id="email" name="email" required
+                                           placeholder="varsity mail" 
+                                           pattern="[a-zA-Z0-9._%+-]+@(uttara\.ac\.bd|uttarauniversity\.edu\.bd)$"
+                                           title="Must be a valid @uttara.ac.bd or @uttarauniversity.edu.bd email"
+                                           oninput="validateEmailDomain(this)">
+                                    <small class="form-text text-muted">Must use @uttara.ac.bd or @uttarauniversity.edu.bd email</small>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label for="phone" class="form-label">Phone Number *</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" required
+                                           placeholder="+8801XXXXXXXXX" value="+880" maxlength="14"
+                                           pattern="\+880[0-9]{10}" title="Format: +880XXXXXXXXXX"
+                                           oninput="formatPhoneNumber(this)">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    <label for="queries" class="form-label">Any Queries (Optional)</label>
+                                    <textarea class="form-control" id="queries" name="queries" rows="3"
+                                              placeholder="Any questions or special requirements?" maxlength="500"></textarea>
+                                    <small class="form-text text-muted">Maximum 500 characters</small>
+                                </div>
+                            </div>
+
+                            <div class="payment-section mb-4">
+                                <h5 class="section-heading">Payment Information</h5>
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle"></i> Registration Fee: <strong style="font-size: 1.3rem;" id="paymentFeeDisplay">200 BDT</strong>
+                                    <br><small>Pay via bKash/Rocket/Nagad(<strong style="font-size: 1.2rem;">019xxxxx</strong>) and enter transaction details below</small>
+                                    <br><strong>Already Pre-Booked? You're all set—no payment needed!</strong>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="paymentNumber" class="form-label">Payment Number *</label>
+                                        <input type="tel" class="form-control" id="paymentNumber" name="paymentNumber" required
+                                               placeholder="01XXXXXXXXX" maxlength="11" pattern="[0-9]{11}"
+                                               title="11 digit mobile number"
+                                               oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                        <small class="form-text text-muted">Number used for payment</small>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="transactionId" class="form-label">Transaction/Txn ID *</label>
+                                        <input type="text" class="form-control" id="transactionId" name="transactionId" required
+                                               placeholder="Enter transaction ID" maxlength="20"
+                                               pattern="[A-Za-z0-9]+" title="Only letters and numbers allowed"
+                                               oninput="this.value = this.value.replace(/[^A-Za-z0-9]/g, '')">
+                                        <small class="form-text text-muted">Transaction/Reference ID from payment</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="alert alert-warning mt-3">
+                                    <i class="fas fa-exclamation-circle"></i> 
+                                    <strong>Payment Verification:</strong>
+                                    <p class="mb-0 mt-2">
+                                        • All payments will be verified before final confirmation<br>
+                                        • Ensure you enter the correct transaction ID<br>
+                                        • Keep your payment receipt/screenshot for reference<br>
+                                        • Invalid payment details will result in registration cancellation
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                                <label class="form-check-label" for="agreeTerms">
+                                    I agree to the <a href="index.php?page=terms" target="_blank">terms and conditions</a> and confirm that all information provided is accurate *
+                                </label>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-register-cybercon btn-lg" id="submitRegBtn" disabled>
+                                    <i class="fas fa-rocket"></i> REGISTRATION CLOSED
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loading Overlay (Full Screen) -->
+    <div class="loading-overlay-form" id="loadingOverlayForm" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(10, 14, 39, 0.85); z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center;">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-3" style="color: white;">Processing your registration...</p>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content success-modal-content">
+                <div class="modal-header success-modal-header">
+                    <h5 class="modal-title success-modal-title">
+                        <i class="fas fa-check-circle"></i> REGISTRATION SUCCESSFUL
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body success-modal-body text-center py-5">
+                    <div class="ticket-display-box mb-4">
+                        <p class="ticket-label mb-3">YOUR TICKET ID</p>
+                        <h2 class="ticket-number-display" id="modalTicketId">2501</h2>
+                    </div>
+                    <div class="success-message-box">
+                        <p class="success-text-main">Congratulations! You're registered for CyberCon25!</p>
+                        <p class="success-text-email">A confirmation email has been sent to <span class="email-highlight" id="modalEmail"></span></p>
+                    </div>
+                    <div class="alert-save-ticket mt-4">
+                        <i class="fas fa-exclamation-triangle"></i> 
+                        <span>Save your Ticket ID for event entry</span>
+                    </div>
+                </div>
+                <div class="modal-footer success-modal-footer">
+                    <button type="button" class="btn-close-modal" data-bs-dismiss="modal">
+                        <i class="fas fa-times-circle"></i> Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 mb-4">
+                    <h2 class="section-title">Get In Touch</h2>
+                    <p>Have questions? We'd love to hear from you.</p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h5>Email</h5>
+                                <p>cybersecurity@club.uttara.ac.bd</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <h5>Phone</h5>
+                                <p>+880 1919399235<br>Pranto Kumar Shil - Organizing Secretary, Uttara University</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h5>Location</h5>
+                                <p>Uttara University<br>Uttara, Dhaka, Bangladesh</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="social-links mt-4">
+                        <a href="https://facebook.com/csc.uu.bd" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.linkedin.com/company/cscuu/?viewAsMember=true" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/Cyber-Security-Club-Uttara-University" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://discord.gg/N83SjBHjzG" target="_blank" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-7 d-flex align-items-center">
+                    <div class="entry-pass-showcase w-100">
+                        <div class="entry-pass-container">
+                            <img src="assets/ticket/ticket-hover.png" alt="CyberCon25 Entry Pass" class="entry-pass-image ticket-base">
+                            <img src="assets/ticket/ticket-base.png" alt="CyberCon25 Entry Pass" class="entry-pass-image ticket-hover">
+                        </div>
+                        <div class="pass-benefits text-center mt-4">
+                            <p class="benefits-text">
+                                <i class="fas fa-check-circle text-success"></i> All-Access Pass to CyberCon25
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <img src="assets/images/logo/CyberCon.png" alt="CyberCon Logo" class="footer-logo mb-3">
+                    <p>The premier cybersecurity conference bringing together industry leaders, researchers, and enthusiasts.</p>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#speakers">Speakers</a></li>
+                        <li><a href="#villages">Villages</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Resources</h5>
+                    <ul class="footer-links">
+                        <li><a href="#register">Register</a></li>
+                        <li><a href="#contact">Venue</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Legal</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.php?page=terms">Terms & Conditions</a></li>
+                        <li><a href="index.php?page=terms#code-of-conduct">Code of Conduct</a></li>
+                        <li><a href="index.php?page=terms#data-privacy">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Connect</h5>
+                    <div class="social-links">
+                        <a href="https://facebook.com/csc.uu.bd" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.linkedin.com/company/cscuu/?viewAsMember=true" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/Cyber-Security-Club-Uttara-University" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://discord.gg/N83SjBHjzG" target="_blank" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                        <a href="mailto:cybersecurity@club.uttara.ac.bd" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="copyright">
+                        © 2025 CyberCon Conference. All rights reserved. | Organized by Cyber Security Club - Uttara University
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollTop" class="scroll-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
