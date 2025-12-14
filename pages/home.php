@@ -641,7 +641,7 @@
                                     <label for="email" class="form-label">Varsity Email *</label>
                                     <input type="email" class="form-control" id="email" name="email" required
                                            placeholder="varsity mail" 
-                                           pattern="[a-zA-Z0-9._%+-]+@(uttara\.ac\.bd|uttarauniversity\.edu\.bd)$"
+                                           pattern="[a-zA-Z0-9._%+-]+@(uttara\.ac\.bd|uttarauniversity\.edu\.bd)"
                                            title="Must be a valid @uttara.ac.bd or @uttarauniversity.edu.bd email"
                                            oninput="validateEmailDomain(this)">
                                     <small class="form-text text-muted">Must use @uttara.ac.bd or @uttarauniversity.edu.bd email</small>
@@ -674,7 +674,18 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-6 mb-3">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="paymentMethod" class="form-label">Payment Method *</label>
+                                        <select class="form-control" id="paymentMethod" name="paymentMethod" required>
+                                            <option value="">Select Method</option>
+                                            <option value="Bkash">Bkash</option>
+                                            <option value="Nagad">Nagad</option>
+                                            <option value="Rocket">Rocket</option>
+                                        </select>
+                                        <small class="form-text text-muted">Choose payment method</small>
+                                    </div>
+                                    
+                                    <div class="col-md-4 mb-3">
                                         <label for="paymentNumber" class="form-label">Payment Number *</label>
                                         <input type="tel" class="form-control" id="paymentNumber" name="paymentNumber" required
                                                placeholder="01XXXXXXXXX" maxlength="11" pattern="[0-9]{11}"
@@ -683,7 +694,7 @@
                                         <small class="form-text text-muted">Number used for payment</small>
                                     </div>
                                     
-                                    <div class="col-md-6 mb-3">
+                                    <div class="col-md-4 mb-3">
                                         <label for="transactionId" class="form-label">Transaction/Txn ID *</label>
                                         <input type="text" class="form-control" id="transactionId" name="transactionId" required
                                                placeholder="Enter transaction ID" maxlength="20"
@@ -713,8 +724,8 @@
                             </div>
 
                             <div class="form-actions">
-                                <button type="submit" class="btn btn-register-cybercon btn-lg" id="submitRegBtn" disabled>
-                                    <i class="fas fa-rocket"></i> REGISTRATION CLOSED
+                                <button type="submit" class="btn btn-register-cybercon btn-lg" id="submitRegBtn" enabled>
+                                    <i class="fas fa-rocket"></i> REGISTRATION SUBMIT
                                 </button>
                             </div>
                         </form>

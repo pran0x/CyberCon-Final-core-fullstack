@@ -11,6 +11,19 @@ $statusFilter = isset($_GET['status']) ? $_GET['status'] : '';
 $batchFilter = isset($_GET['batch']) ? $_GET['batch'] : '';
 $deptFilter = isset($_GET['dept']) ? $_GET['dept'] : '';
 
+// Get sorting parameters
+$sortBy = isset($_GET['sort']) ? $_GET['sort'] : 'created_at';
+$sortOrder = isset($_GET['order']) ? $_GET['order'] : 'DESC';
+
+// Allowed sort columns for security
+$allowedSortColumns = ['ticket_id', 'full_name', 'student_id', 'email', 'university', 'department', 'batch', 'section', 'status', 'created_at', 'updated_at', 'registration_date'];
+if (!in_array($sortBy, $allowedSortColumns)) {
+    $sortBy = 'created_at';
+}
+
+// Validate sort order
+$sortOrder = strtoupper($sortOrder) === 'ASC' ? 'ASC' : 'DESC';
+
 // Pagination
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $perPage = 50;
@@ -52,8 +65,8 @@ $countStmt->execute($params);
 $totalRecords = $countStmt->fetch()['total'];
 $totalPages = ceil($totalRecords / $perPage);
 
-// Get registrations
-$query .= " ORDER BY created_at DESC LIMIT :limit OFFSET :offset";
+// Get registrations with dynamic sorting
+$query .= " ORDER BY $sortBy $sortOrder LIMIT :limit OFFSET :offset";
 $stmt = $conn->prepare($query);
 foreach ($params as $key => $value) {
     $stmt->bindValue($key, $value);
@@ -96,6 +109,18 @@ $departments = $deptStmt->fetchAll(PDO::FETCH_COLUMN);
             border-radius: 10px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+        .sortable {
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.2s;
+        }
+        .sortable:hover {
+            background-color: #e9ecef;
+        }
+        .sortable i {
+            font-size: 0.8em;
+            margin-left: 5px;
+        }
     </style>
 </head>
 <body>
@@ -123,7 +148,7 @@ $departments = $deptStmt->fetchAll(PDO::FETCH_COLUMN);
         <!-- Filters -->
         <div class="card filter-card mb-4">
             <div class="card-body">
-                <form method="GET" class="row g-3">
+                <form method="GET" class="row g-3" id="filterForm">
                     <div class="col-md-3">
                         <label class="form-label"><i class="fas fa-search"></i> Search</label>
                         <input type="text" name="search" class="form-control" placeholder="Ticket ID, Name, Email..." value="<?php echo htmlspecialchars($search); ?>">
@@ -160,16 +185,31 @@ $departments = $deptStmt->fetchAll(PDO::FETCH_COLUMN);
                             <?php endforeach; ?>
                         </select>
                     </div>
+                    <div class="col-md-2">
+                        <label class="form-label"><i class="fas fa-sort"></i> Sort By</label>
+                        <select name="sort" class="form-select" id="sortSelect">
+                            <option value="created_at" <?php echo $sortBy === 'created_at' ? 'selected' : ''; ?>>Latest First</option>
+                            <option value="created_at_asc" <?php echo $sortBy === 'created_at' && $sortOrder === 'ASC' ? 'selected' : ''; ?>>Oldest First</option>
+                            <option value="updated_at" <?php echo $sortBy === 'updated_at' ? 'selected' : ''; ?>>Recently Modified</option>
+                            <option value="full_name" <?php echo $sortBy === 'full_name' && $sortOrder === 'ASC' ? 'selected' : ''; ?>>Name (A-Z)</option>
+                            <option value="full_name_desc" <?php echo $sortBy === 'full_name' && $sortOrder === 'DESC' ? 'selected' : ''; ?>>Name (Z-A)</option>
+                            <option value="ticket_id" <?php echo $sortBy === 'ticket_id' && $sortOrder === 'ASC' ? 'selected' : ''; ?>>Ticket ID (Asc)</option>
+                            <option value="ticket_id_desc" <?php echo $sortBy === 'ticket_id' && $sortOrder === 'DESC' ? 'selected' : ''; ?>>Ticket ID (Desc)</option>
+                            <option value="batch" <?php echo $sortBy === 'batch' ? 'selected' : ''; ?>>Batch</option>
+                            <option value="department" <?php echo $sortBy === 'department' ? 'selected' : ''; ?>>Department</option>
+                            <option value="status" <?php echo $sortBy === 'status' ? 'selected' : ''; ?>>Status</option>
+                        </select>
+                    </div>
                     <div class="col-md-2 d-flex align-items-end">
                         <button type="submit" class="btn btn-primary w-100">
-                            <i class="fas fa-filter"></i> Filter
+                            <i class="fas fa-filter"></i> Apply
                         </button>
                     </div>
                 </form>
-                <?php if (!empty($search) || !empty($statusFilter) || !empty($batchFilter) || !empty($deptFilter)): ?>
+                <?php if (!empty($search) || !empty($statusFilter) || !empty($batchFilter) || !empty($deptFilter) || $sortBy !== 'created_at' || $sortOrder !== 'DESC'): ?>
                     <div class="mt-2">
                         <a href="registrations.php" class="btn btn-sm btn-outline-secondary">
-                            <i class="fas fa-times"></i> Clear Filters
+                            <i class="fas fa-times"></i> Clear All
                         </a>
                     </div>
                 <?php endif; ?>
@@ -189,17 +229,73 @@ $departments = $deptStmt->fetchAll(PDO::FETCH_COLUMN);
                     <table class="table table-hover table-striped mb-0">
                         <thead class="table-light">
                             <tr>
-                                <th style="min-width: 120px;">Ticket ID</th>
-                                <th style="min-width: 180px;">Full Name</th>
-                                <th style="min-width: 120px;">Student ID</th>
-                                <th style="min-width: 200px;">Email</th>
+                                <th style="min-width: 120px;" class="sortable" onclick="sortTable('ticket_id')">
+                                    Ticket ID 
+                                    <?php if ($sortBy === 'ticket_id'): ?>
+                                        <i class="fas fa-sort-<?php echo $sortOrder === 'ASC' ? 'up' : 'down'; ?>"></i>
+                                    <?php else: ?>
+                                        <i class="fas fa-sort text-muted"></i>
+                                    <?php endif; ?>
+                                </th>
+                                <th style="min-width: 180px;" class="sortable" onclick="sortTable('full_name')">
+                                    Full Name
+                                    <?php if ($sortBy === 'full_name'): ?>
+                                        <i class="fas fa-sort-<?php echo $sortOrder === 'ASC' ? 'up' : 'down'; ?>"></i>
+                                    <?php else: ?>
+                                        <i class="fas fa-sort text-muted"></i>
+                                    <?php endif; ?>
+                                </th>
+                                <th style="min-width: 120px;" class="sortable" onclick="sortTable('student_id')">
+                                    Student ID
+                                    <?php if ($sortBy === 'student_id'): ?>
+                                        <i class="fas fa-sort-<?php echo $sortOrder === 'ASC' ? 'up' : 'down'; ?>"></i>
+                                    <?php else: ?>
+                                        <i class="fas fa-sort text-muted"></i>
+                                    <?php endif; ?>
+                                </th>
+                                <th style="min-width: 200px;" class="sortable" onclick="sortTable('email')">
+                                    Email
+                                    <?php if ($sortBy === 'email'): ?>
+                                        <i class="fas fa-sort-<?php echo $sortOrder === 'ASC' ? 'up' : 'down'; ?>"></i>
+                                    <?php else: ?>
+                                        <i class="fas fa-sort text-muted"></i>
+                                    <?php endif; ?>
+                                </th>
                                 <th style="min-width: 150px;">University</th>
-                                <th style="min-width: 120px;">Department</th>
-                                <th style="min-width: 80px;">Batch</th>
-                                <th style="min-width: 80px;">Section</th>
+                                <th style="min-width: 120px;" class="sortable" onclick="sortTable('department')">
+                                    Department
+                                    <?php if ($sortBy === 'department'): ?>
+                                        <i class="fas fa-sort-<?php echo $sortOrder === 'ASC' ? 'up' : 'down'; ?>"></i>
+                                    <?php else: ?>
+                                        <i class="fas fa-sort text-muted"></i>
+                                    <?php endif; ?>
+                                </th>
+                                <th style="min-width: 80px;" class="sortable" onclick="sortTable('batch')">
+                                    Batch
+                                    <?php if ($sortBy === 'batch'): ?>
+                                        <i class="fas fa-sort-<?php echo $sortOrder === 'ASC' ? 'up' : 'down'; ?>"></i>
+                                    <?php else: ?>
+                                        <i class="fas fa-sort text-muted"></i>
+                                    <?php endif; ?>
+                                </th>
+                                <th style="min-width: 80px;" class="sortable" onclick="sortTable('section')">
+                                    Section
+                                    <?php if ($sortBy === 'section'): ?>
+                                        <i class="fas fa-sort-<?php echo $sortOrder === 'ASC' ? 'up' : 'down'; ?>"></i>
+                                    <?php else: ?>
+                                        <i class="fas fa-sort text-muted"></i>
+                                    <?php endif; ?>
+                                </th>
                                 <th style="min-width: 130px;">Payment Number</th>
                                 <th style="min-width: 130px;">Transaction ID</th>
-                                <th style="min-width: 100px;">Status</th>
+                                <th style="min-width: 100px;" class="sortable" onclick="sortTable('status')">
+                                    Status
+                                    <?php if ($sortBy === 'status'): ?>
+                                        <i class="fas fa-sort-<?php echo $sortOrder === 'ASC' ? 'up' : 'down'; ?>"></i>
+                                    <?php else: ?>
+                                        <i class="fas fa-sort text-muted"></i>
+                                    <?php endif; ?>
+                                </th>
                                 <th style="min-width: 120px;" class="text-center">Actions</th>
                             </tr>
                         </thead>
@@ -267,7 +363,7 @@ $departments = $deptStmt->fetchAll(PDO::FETCH_COLUMN);
                         <ul class="pagination justify-content-center mb-0">
                             <?php if ($page > 1): ?>
                                 <li class="page-item">
-                                    <a class="page-link" href="?page=<?php echo $page - 1; ?>&search=<?php echo urlencode($search); ?>&status=<?php echo urlencode($statusFilter); ?>&batch=<?php echo urlencode($batchFilter); ?>&dept=<?php echo urlencode($deptFilter); ?>">
+                                    <a class="page-link" href="?page=<?php echo $page - 1; ?>&search=<?php echo urlencode($search); ?>&status=<?php echo urlencode($statusFilter); ?>&batch=<?php echo urlencode($batchFilter); ?>&dept=<?php echo urlencode($deptFilter); ?>&sort=<?php echo urlencode($sortBy); ?>&order=<?php echo urlencode($sortOrder); ?>">
                                         <i class="fas fa-chevron-left"></i>
                                     </a>
                                 </li>
@@ -276,7 +372,7 @@ $departments = $deptStmt->fetchAll(PDO::FETCH_COLUMN);
                             <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                                 <?php if ($i == 1 || $i == $totalPages || ($i >= $page - 2 && $i <= $page + 2)): ?>
                                     <li class="page-item <?php echo $i === $page ? 'active' : ''; ?>">
-                                        <a class="page-link" href="?page=<?php echo $i; ?>&search=<?php echo urlencode($search); ?>&status=<?php echo urlencode($statusFilter); ?>&batch=<?php echo urlencode($batchFilter); ?>&dept=<?php echo urlencode($deptFilter); ?>">
+                                        <a class="page-link" href="?page=<?php echo $i; ?>&search=<?php echo urlencode($search); ?>&status=<?php echo urlencode($statusFilter); ?>&batch=<?php echo urlencode($batchFilter); ?>&dept=<?php echo urlencode($deptFilter); ?>&sort=<?php echo urlencode($sortBy); ?>&order=<?php echo urlencode($sortOrder); ?>">
                                             <?php echo $i; ?>
                                         </a>
                                     </li>
@@ -287,7 +383,7 @@ $departments = $deptStmt->fetchAll(PDO::FETCH_COLUMN);
                             
                             <?php if ($page < $totalPages): ?>
                                 <li class="page-item">
-                                    <a class="page-link" href="?page=<?php echo $page + 1; ?>&search=<?php echo urlencode($search); ?>&status=<?php echo urlencode($statusFilter); ?>&batch=<?php echo urlencode($batchFilter); ?>&dept=<?php echo urlencode($deptFilter); ?>">
+                                    <a class="page-link" href="?page=<?php echo $page + 1; ?>&search=<?php echo urlencode($search); ?>&status=<?php echo urlencode($statusFilter); ?>&batch=<?php echo urlencode($batchFilter); ?>&dept=<?php echo urlencode($deptFilter); ?>&sort=<?php echo urlencode($sortBy); ?>&order=<?php echo urlencode($sortOrder); ?>">
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
                                 </li>
@@ -338,6 +434,60 @@ $departments = $deptStmt->fetchAll(PDO::FETCH_COLUMN);
             var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
             deleteModal.show();
         }
+        
+        // Sort table by column
+        function sortTable(column) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentSort = urlParams.get('sort') || 'created_at';
+            const currentOrder = urlParams.get('order') || 'DESC';
+            
+            let newOrder = 'ASC';
+            if (currentSort === column) {
+                // Toggle order if clicking same column
+                newOrder = currentOrder === 'ASC' ? 'DESC' : 'ASC';
+            }
+            
+            urlParams.set('sort', column);
+            urlParams.set('order', newOrder);
+            urlParams.set('page', '1'); // Reset to first page when sorting
+            
+            window.location.search = urlParams.toString();
+        }
+        
+        // Handle sort select change
+        document.getElementById('sortSelect')?.addEventListener('change', function() {
+            const value = this.value;
+            const form = document.getElementById('filterForm');
+            
+            // Parse sort value
+            if (value.endsWith('_asc')) {
+                const sortField = value.replace('_asc', '');
+                const orderInput = document.createElement('input');
+                orderInput.type = 'hidden';
+                orderInput.name = 'order';
+                orderInput.value = 'ASC';
+                form.appendChild(orderInput);
+                
+                const sortInput = document.createElement('input');
+                sortInput.type = 'hidden';
+                sortInput.name = 'sort';
+                sortInput.value = sortField;
+                form.appendChild(sortInput);
+            } else if (value.endsWith('_desc')) {
+                const sortField = value.replace('_desc', '');
+                const orderInput = document.createElement('input');
+                orderInput.type = 'hidden';
+                orderInput.name = 'order';
+                orderInput.value = 'DESC';
+                form.appendChild(orderInput);
+                
+                const sortInput = document.createElement('input');
+                sortInput.type = 'hidden';
+                sortInput.name = 'sort';
+                sortInput.value = sortField;
+                form.appendChild(sortInput);
+            }
+        });
     </script>
     
     <!-- Footer -->

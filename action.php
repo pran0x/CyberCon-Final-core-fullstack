@@ -73,6 +73,7 @@ function handleRegistration() {
     $email = isset($_POST['email']) ? sanitize_input($_POST['email']) : '';
     $phone = isset($_POST['phone']) ? sanitize_input($_POST['phone']) : '';
     $queries = isset($_POST['queries']) ? sanitize_input($_POST['queries']) : '';
+    $paymentMethod = isset($_POST['paymentMethod']) ? sanitize_input($_POST['paymentMethod']) : '';
     $paymentNumber = isset($_POST['paymentNumber']) ? sanitize_input($_POST['paymentNumber']) : '';
     $transactionId = isset($_POST['transactionId']) ? sanitize_input($_POST['transactionId']) : '';
     $ticketPrice = isset($_POST['ticketPrice']) ? sanitize_input($_POST['ticketPrice']) : '200 BDT';
@@ -105,6 +106,10 @@ function handleRegistration() {
         $errors[] = "Transaction ID is required";
     }
     
+    if (empty($paymentMethod)) {
+        $errors[] = "Payment method is required";
+    }
+    
     // Check for errors
     if (!empty($errors)) {
         $response['message'] = implode(", ", $errors);
@@ -112,8 +117,8 @@ function handleRegistration() {
         return;
     }
     
-    // Generate ticket ID (You can implement your own logic)
-    $ticketId = 'CC25-' . strtoupper(substr(md5(time() . $studentId), 0, 8));
+    // Generate unique 4-digit ticket ID
+    $ticketId = generateUniqueTicketId();
     
     // Here you would typically:
     // 1. Save to database
@@ -131,13 +136,14 @@ function handleRegistration() {
         'ticketId' => $ticketId,
         'fullName' => $fullName,
         'studentId' => $studentId,
-        'university' => $university,
-        'department' => $department,
-        'batch' => $batch,
-        'section' => $section,
         'email' => $email,
         'phone' => $phone,
         'queries' => $queries,
+        'paymentMethod' => $paymentMethod,
+        'paymentNumber' => $paymentNumber,
+        'transactionId' => $transactionId,
+        'ticketPrice' => $ticketPrice,
+        'registrationDate' => date('Y-m-d H:i:s')
         'paymentNumber' => $paymentNumber,
         'transactionId' => $transactionId,
         'ticketPrice' => $ticketPrice,
@@ -207,6 +213,50 @@ function handleContact() {
     // }
     
     echo json_encode($response);
+}
+
+/**
+ * Generate unique 4-digit ticket ID
+ */
+function generateUniqueTicketId() {
+    $attempts = 0;
+    $maxAttempts = 10;
+    $filename = __DIR__ . '/registrations.json';
+    
+    // Read existing registrations to check for duplicates
+    $existingIds = [];
+    if (file_exists($filename)) {
+        $content = file_get_contents($filename);
+        $registrations = json_decode($content, true);
+        if (is_array($registrations)) {
+            foreach ($registrations as $reg) {
+                if (isset($reg['ticketId'])) {
+                    $existingIds[] = $reg['ticketId'];
+                }
+            }
+        }
+    }
+    
+    while ($attempts < $maxAttempts) {
+        // Generate ID using time * random number, then get last 4 digits
+        $timeComponent = microtime(true) * 1000; // milliseconds
+        $randomComponent = rand(1000, 9999);
+        $combined = $timeComponent * $randomComponent;
+        
+        // Get last 4 digits and ensure it's 4 digits
+        $ticketId = str_pad(substr((string)abs((int)$combined), -4), 4, '0', STR_PAD_LEFT);
+        
+        // Check if ticket ID already exists
+        if (!in_array($ticketId, $existingIds)) {
+            return $ticketId;
+        }
+        
+        $attempts++;
+        usleep(1000); // Wait 1ms before retry
+    }
+    
+    // Fallback: use timestamp-based ID
+    return str_pad(substr((string)time(), -4), 4, '0', STR_PAD_LEFT);
 }
 
 /**

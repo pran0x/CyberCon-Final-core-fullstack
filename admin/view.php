@@ -624,17 +624,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
         
         <!-- Print Header (Only visible when printing) -->
         <div class="print-header">
-            <img src="../assets/images/logo/cyber-security-club-logo.png" alt="Cyber Security Club Logo" onerror="this.src='../assets/images/logo/CyberCon.png'">
+            <img src="../assets/images/logo/cyber-security-club-logo-blue.png" alt="Cyber Security Club Logo" onerror="this.src='../assets/images/logo/CyberCon.png'">
             <h2>CYBERCON 2025</h2>
             <p>Registration Details</p>
             <p>Cyber Security Club, Uttara University</p>
-        </div>
-        
-        <!-- Print Footer Logo (Only visible when printing) -->
-        <div class="print-logo">
-            <img src="../assets/images/logo/cyber-security-club-logo.png" alt="Cyber Security Club Logo" onerror="this.src='../assets/images/logo/CyberCon.png'">
-            <p>Cyber Security Club, Uttara University</p>
-        </div>
+        </div>       
         
         <!-- Print Footer Information (Only visible when printing) -->
         <div class="print-footer-info">

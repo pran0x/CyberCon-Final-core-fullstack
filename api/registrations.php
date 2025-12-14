@@ -157,7 +157,7 @@ class RegistrationAPI {
 
         // Validate required fields
         $requiredFields = ['fullName', 'studentId', 'email', 'phone', 'university', 
-                          'ticketType', 'paymentMethod', 'paymentNumber', 'transactionId'];
+                          'department', 'batch', 'section', 'ticketType', 'paymentMethod', 'paymentNumber', 'transactionId'];
         
         foreach ($requiredFields as $field) {
             if (!isset($input[$field]) || empty(trim($input[$field]))) {
@@ -172,7 +172,7 @@ class RegistrationAPI {
                 return $this->sendResponse(400, false, 'Invalid email format');
             }
 
-            $allowedDomains = ['cuet.ac.bd', 'aust.edu', 'du.ac.bd', 'buet.ac.bd', 'nsu.edu.bd'];
+            $allowedDomains = ['uttara.ac.bd', 'uttarauniversity.edu.bd'];
             $emailDomain = substr(strrchr($email, "@"), 1);
             if (!in_array($emailDomain, $allowedDomains)) {
                 return $this->sendResponse(400, false, 'Email must be from an approved university domain');
@@ -194,10 +194,10 @@ class RegistrationAPI {
             // Prepare insert query
             $query = "INSERT INTO registrations 
                      (ticket_id, full_name, student_id, email, phone, university, 
-                      ticket_type, payment_method, payment_number, transaction_id, status) 
+                      department, batch, section, ticket_type, payment_method, payment_number, transaction_id, status) 
                      VALUES 
                      (:ticket_id, :full_name, :student_id, :email, :phone, :university, 
-                      :ticket_type, :payment_method, :payment_number, :transaction_id, 'pending')";
+                      :department, :batch, :section, :ticket_type, :payment_method, :payment_number, :transaction_id, 'pending')";
 
             $stmt = $this->conn->prepare($query);
 
@@ -208,6 +208,9 @@ class RegistrationAPI {
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':phone', $input['phone']);
             $stmt->bindParam(':university', $input['university']);
+            $stmt->bindParam(':department', $input['department']);
+            $stmt->bindParam(':batch', $input['batch']);
+            $stmt->bindParam(':section', $input['section']);
             $stmt->bindParam(':ticket_type', $input['ticketType']);
             $stmt->bindParam(':payment_method', $input['paymentMethod']);
             $stmt->bindParam(':payment_number', $input['paymentNumber']);
@@ -239,19 +242,39 @@ class RegistrationAPI {
     }
 
     /**
-     * Generate unique ticket ID
-     * Format: CC-YYYY-XXXX (e.g., CC-2025-1A2B)
+     * Generate unique 4-digit ticket ID
+     * Uses time-based algorithm to ensure uniqueness
      */
     private function generateTicketId() {
-        $year = date('Y');
-        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $randomString = '';
+        $attempts = 0;
+        $maxAttempts = 10;
         
-        for ($i = 0; $i < 4; $i++) {
-            $randomString .= $characters[rand(0, strlen($characters) - 1)];
+        while ($attempts < $maxAttempts) {
+            // Generate ID using time * random number, then get last 4 digits
+            $timeComponent = microtime(true) * 1000; // milliseconds
+            $randomComponent = rand(1000, 9999);
+            $combined = $timeComponent * $randomComponent;
+            
+            // Get last 4 digits and ensure it's 4 digits
+            $ticketId = str_pad(substr((string)abs((int)$combined), -4), 4, '0', STR_PAD_LEFT);
+            
+            // Check if ticket ID already exists
+            $checkQuery = "SELECT COUNT(*) as count FROM registrations WHERE ticket_id = :ticket_id";
+            $checkStmt = $this->conn->prepare($checkQuery);
+            $checkStmt->bindParam(':ticket_id', $ticketId);
+            $checkStmt->execute();
+            $result = $checkStmt->fetch();
+            
+            if ($result['count'] == 0) {
+                return $ticketId;
+            }
+            
+            $attempts++;
+            usleep(1000); // Wait 1ms before retry
         }
         
-        return "CC-{$year}-{$randomString}";
+        // Fallback: use timestamp-based ID
+        return str_pad(substr((string)time(), -4), 4, '0', STR_PAD_LEFT);
     }
 
     /**

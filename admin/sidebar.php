@@ -25,6 +25,14 @@
             <i class="fas fa-shield-alt"></i>
             <span>Security Logs</span>
         </a>
+        <a href="send_email.php" class="menu-item <?php echo basename($_SERVER['PHP_SELF']) === 'send_email.php' ? 'active' : ''; ?>">
+            <i class="fas fa-envelope"></i>
+            <span>Send Email</span>
+        </a>
+        <a href="email_history.php" class="menu-item <?php echo basename($_SERVER['PHP_SELF']) === 'email_history.php' ? 'active' : ''; ?>">
+            <i class="fas fa-history"></i>
+            <span>Email History</span>
+        </a>
         <?php endif; ?>
         <a href="logs.php" class="menu-item <?php echo basename($_SERVER['PHP_SELF']) === 'logs.php' ? 'active' : ''; ?>">
             <i class="fas fa-history"></i>
