@@ -7,6 +7,12 @@ $conn = $db->getConnection();
 
 $adminId = $_GET['id'] ?? $_SESSION['admin_id'] ?? null;
 
+// Check if user has permission to view this profile
+if (!canViewAdmin($adminId)) {
+    header('Location: admins.php?error=access_denied');
+    exit();
+}
+
 // Fetch admin details
 $stmt = $conn->prepare("SELECT * FROM admins WHERE id = :id");
 $stmt->bindParam(':id', $adminId);
@@ -18,11 +24,18 @@ if (!$admin) {
     exit();
 }
 
+// Check if user can edit this profile
+$canEdit = canEditAdmin($adminId);
+
 $success = $error = '';
 
 // Handle avatar upload
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['avatar'])) {
-    $file = $_FILES['avatar'];
+    // Check permission
+    if (!$canEdit) {
+        $error = "You don't have permission to edit this profile.";
+    } else {
+        $file = $_FILES['avatar'];
     $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
     $maxSize = 2 * 1024 * 1024; // 2MB
     
@@ -64,11 +77,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['avatar'])) {
             $error = "Only JPG, JPEG, and PNG files are allowed.";
         }
     }
+    }
 }
 
 // Handle profile update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
-    $fullName = trim($_POST['full_name'] ?? '');
+    // Check permission
+    if (!$canEdit) {
+        $error = "You don't have permission to edit this profile.";
+    } else {
+        $fullName = trim($_POST['full_name'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $newPassword = trim($_POST['new_password'] ?? '');
     
@@ -95,6 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
         } catch (PDOException $e) {
             $error = "Failed to update profile: " . $e->getMessage();
         }
+    }
     }
 }
 ?>
@@ -133,6 +152,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
             </div>
         <?php endif; ?>
         
+        <?php if (!$canEdit): ?>
+            <div class="alert alert-warning">
+                <i class="fas fa-lock"></i> You are viewing this profile in read-only mode. Only super admins can edit other admin profiles.
+            </div>
+        <?php endif; ?>
+        
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
@@ -153,10 +178,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
                         
                         <form method="POST" enctype="multipart/form-data">
                             <div class="mb-3">
-                                <input type="file" name="avatar" class="form-control" accept=".jpg,.jpeg,.png" required>
+                                <input type="file" name="avatar" class="form-control" accept=".jpg,.jpeg,.png" required <?php echo !$canEdit ? 'disabled' : ''; ?>>
                                 <small class="text-muted">JPG, JPEG, PNG only. Max 2MB</small>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">
+                            <button type="submit" class="btn btn-primary w-100" <?php echo !$canEdit ? 'disabled' : ''; ?>>
                                 <i class="fas fa-upload"></i> Upload Avatar
                             </button>
                         </form>
@@ -213,23 +238,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
                         <form method="POST">
                             <div class="mb-3">
                                 <label class="form-label">Full Name *</label>
-                                <input type="text" name="full_name" class="form-control" value="<?php echo htmlspecialchars($admin['full_name']); ?>" required>
+                                <input type="text" name="full_name" class="form-control" value="<?php echo htmlspecialchars($admin['full_name']); ?>" required <?php echo !$canEdit ? 'readonly' : ''; ?>>
                             </div>
                             
                             <div class="mb-3">
                                 <label class="form-label">Email *</label>
-                                <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($admin['email']); ?>" required>
+                                <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($admin['email']); ?>" required <?php echo !$canEdit ? 'readonly' : ''; ?>>
                             </div>
                             
                             <div class="mb-3">
                                 <label class="form-label">New Password</label>
-                                <input type="password" name="new_password" class="form-control" placeholder="Leave blank to keep current password">
+                                <input type="password" name="new_password" class="form-control" placeholder="Leave blank to keep current password" <?php echo !$canEdit ? 'readonly' : ''; ?>>
                                 <small class="text-muted">Only enter if you want to change your password</small>
                             </div>
                             
+                            <?php if ($canEdit): ?>
                             <button type="submit" name="update_profile" class="btn btn-primary">
                                 <i class="fas fa-save"></i> Save Changes
                             </button>
+                            <?php endif; ?>
                         </form>
                     </div>
                 </div>

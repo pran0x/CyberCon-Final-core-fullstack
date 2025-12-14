@@ -15,6 +15,12 @@ if (!$id || !$conn) {
 
 // Handle delete
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_registration'])) {
+    // Check if user has permission to delete
+    if (!canDelete()) {
+        header('Location: dashboard.php?error=access_denied');
+        exit();
+    }
+    
     // Get registration details before deleting
     $getQuery = "SELECT ticket_id, full_name FROM registrations WHERE id = :id";
     $getStmt = $conn->prepare($getQuery);

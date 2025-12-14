@@ -19,11 +19,15 @@ $success = $error = '';
 
 // Handle new admin creation
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_admin'])) {
-    $username = trim($_POST['username'] ?? '');
-    $password = trim($_POST['password'] ?? '');
-    $fullName = trim($_POST['full_name'] ?? '');
-    $email = trim($_POST['email'] ?? '');
-    $role = $_POST['role'] ?? 'admin';
+    // Only super admins can create new admins
+    if ($currentAdmin['role'] !== 'super_admin') {
+        $error = "Access denied. Only super admins can create new admins.";
+    } else {
+        $username = trim($_POST['username'] ?? '');
+        $password = trim($_POST['password'] ?? '');
+        $fullName = trim($_POST['full_name'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+        $role = $_POST['role'] ?? 'admin';
     
     if ($username && $password && $fullName && $email) {
         try {
@@ -45,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_admin'])) {
         }
     } else {
         $error = "All fields are required!";
+    }
     }
 }
 
@@ -124,6 +129,7 @@ if (isset($_GET['delete']) && $currentAdmin['role'] === 'super_admin') {
                             <select name="role" class="form-select">
                                 <option value="admin">Admin</option>
                                 <option value="super_admin">Super Admin</option>
+                                <option value="viewer">Viewer</option>
                             </select>
                         </div>
                         <div class="col-md-3 d-flex align-items-end">
@@ -173,7 +179,12 @@ if (isset($_GET['delete']) && $currentAdmin['role'] === 'super_admin') {
                                     <td><?php echo htmlspecialchars($admin['full_name']); ?></td>
                                     <td><?php echo htmlspecialchars($admin['email']); ?></td>
                                     <td>
-                                        <span class="badge bg-<?php echo $admin['role'] === 'super_admin' ? 'danger' : 'primary'; ?>">
+                                        <?php 
+                                        $badgeColor = 'primary';
+                                        if ($admin['role'] === 'super_admin') $badgeColor = 'danger';
+                                        elseif ($admin['role'] === 'viewer') $badgeColor = 'info';
+                                        ?>
+                                        <span class="badge bg-<?php echo $badgeColor; ?>">
                                             <?php echo ucfirst(str_replace('_', ' ', $admin['role'])); ?>
                                         </span>
                                     </td>
@@ -186,9 +197,19 @@ if (isset($_GET['delete']) && $currentAdmin['role'] === 'super_admin') {
                                         <?php echo $admin['last_login'] ? date('M j, Y H:i', strtotime($admin['last_login'])) : 'Never'; ?>
                                     </td>
                                     <td>
-                                        <a href="profile.php?id=<?php echo $admin['id']; ?>" class="btn btn-sm btn-info" title="View Profile">
-                                            <i class="fas fa-user"></i>
-                                        </a>
+                                        <?php 
+                                        // Show view/edit button based on permissions
+                                        $canViewThisAdmin = $currentAdmin['role'] === 'super_admin' || $admin['id'] == $currentAdmin['id'];
+                                        ?>
+                                        <?php if ($canViewThisAdmin): ?>
+                                            <a href="profile.php?id=<?php echo $admin['id']; ?>" class="btn btn-sm btn-info" title="<?php echo $admin['id'] == $currentAdmin['id'] ? 'View/Edit Profile' : 'View Profile'; ?>">
+                                                <i class="fas fa-user"></i>
+                                            </a>
+                                        <?php else: ?>
+                                            <button class="btn btn-sm btn-secondary" disabled title="No access">
+                                                <i class="fas fa-lock"></i>
+                                            </button>
+                                        <?php endif; ?>
                                         <?php if ($currentAdmin['role'] === 'super_admin' && $admin['id'] != $currentAdmin['id']): ?>
                                             <a href="?delete=<?php echo $admin['id']; ?>" 
                                                class="btn btn-sm btn-danger" 

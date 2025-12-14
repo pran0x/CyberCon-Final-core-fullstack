@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $admin = $stmt->fetch();
     
     if ($admin) {
-        // Update last login
+        // Update last login time
         $updateStmt = $conn->prepare("UPDATE admins SET last_login = CURRENT_TIMESTAMP WHERE id = :id");
         $updateStmt->bindParam(':id', $admin['id']);
         $updateStmt->execute();
@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['admin_logged_in'] = true;
         $_SESSION['admin_username'] = $username;
         $_SESSION['admin_id'] = $admin['id'];
+        $_SESSION['admin_role'] = $admin['role'];
         $_SESSION['login_time'] = time();
         
         // Log login activity

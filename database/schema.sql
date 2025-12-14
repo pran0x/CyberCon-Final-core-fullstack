@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS admins (
     full_name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     avatar VARCHAR(255) DEFAULT NULL,
-    role ENUM('super_admin', 'admin') DEFAULT 'admin',
+    role ENUM('super_admin', 'admin', 'viewer') DEFAULT 'admin',
     status ENUM('active', 'inactive') DEFAULT 'active',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

@@ -27,7 +27,11 @@ if (!$registration) {
 
 // Handle delete
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_registration'])) {
-    $deleteQuery = "DELETE FROM registrations WHERE id = :id";
+    // Check if user has permission to delete
+    if (!canDelete()) {
+        $error = "Access denied. Viewers cannot delete registration data.";
+    } else {
+        $deleteQuery = "DELETE FROM registrations WHERE id = :id";
     $deleteStmt = $conn->prepare($deleteQuery);
     $deleteStmt->bindParam(':id', $id);
     
@@ -37,11 +41,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_registration']
     } else {
         $error = "Failed to delete registration.";
     }
+    }
 }
 
 // Handle full registration update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_registration'])) {
-    $updateQuery = "UPDATE registrations SET 
+    // Check if user has permission to edit
+    if (!canEditRegistrations()) {
+        $error = "Access denied. Viewers cannot edit registration data.";
+    } else {
+        $updateQuery = "UPDATE registrations SET 
         full_name = :full_name,
         student_id = :student_id,
         email = :email,
@@ -91,11 +100,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_registration']
     } else {
         $error = "Failed to update registration.";
     }
+    }
 }
 
 // Handle status update
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
-    $newStatus = $_POST['status'];
+    // Check if user has permission to edit
+    if (!canEditRegistrations()) {
+        $error = "Access denied. Viewers cannot edit registration data.";
+    } else {
+        $newStatus = $_POST['status'];
     $oldStatus = $registration['status'];
     $updateQuery = "UPDATE registrations SET status = :status WHERE id = :id";
     $updateStmt = $conn->prepare($updateQuery);
@@ -117,6 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
         $registration['status'] = $newStatus;
     } else {
         $error = "Failed to update status.";
+    }
     }
 }
 ?>
@@ -416,6 +431,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
             </div>
         <?php endif; ?>
         
+        <?php if (isViewer()): ?>
+            <div class="alert alert-warning">
+                <i class="fas fa-lock"></i> You are viewing this page in read-only mode. Viewers cannot edit or delete registration data.
+            </div>
+        <?php endif; ?>
+        
         <form method="POST" action="">
         <div class="row">
             <!-- Registration Information -->
@@ -431,51 +452,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="form-label"><i class="fas fa-user"></i> Full Name</label>
-                                <input type="text" name="full_name" class="form-control" value="<?php echo htmlspecialchars($registration['full_name']); ?>" required>
+                                <input type="text" name="full_name" class="form-control" value="<?php echo htmlspecialchars($registration['full_name']); ?>" required <?php echo isViewer() ? 'readonly' : ''; ?>>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label"><i class="fas fa-id-card"></i> Student ID</label>
-                                <input type="text" name="student_id" class="form-control" value="<?php echo htmlspecialchars($registration['student_id']); ?>" required>
+                                <input type="text" name="student_id" class="form-control" value="<?php echo htmlspecialchars($registration['student_id']); ?>" required <?php echo isViewer() ? 'readonly' : ''; ?>>
                             </div>
                         </div>
                         
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="form-label"><i class="fas fa-envelope"></i> Email</label>
-                                <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($registration['email']); ?>" required>
+                                <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($registration['email']); ?>" required <?php echo isViewer() ? 'readonly' : ''; ?>>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label"><i class="fas fa-phone"></i> Phone</label>
-                                <input type="text" name="phone" class="form-control" value="<?php echo htmlspecialchars($registration['phone']); ?>">
+                                <input type="text" name="phone" class="form-control" value="<?php echo htmlspecialchars($registration['phone']); ?>" <?php echo isViewer() ? 'readonly' : ''; ?>>
                             </div>
                         </div>
                         
                         <div class="row mb-3">
                             <div class="col-md-12">
                                 <label class="form-label"><i class="fas fa-university"></i> University</label>
-                                <input type="text" name="university" class="form-control" value="<?php echo htmlspecialchars($registration['university']); ?>" required>
+                                <input type="text" name="university" class="form-control" value="<?php echo htmlspecialchars($registration['university']); ?>" required <?php echo isViewer() ? 'readonly' : ''; ?>>
                             </div>
                         </div>
                         
                         <div class="row mb-3">
                             <div class="col-md-4">
                                 <label class="form-label"><i class="fas fa-building"></i> Department</label>
-                                <input type="text" name="department" class="form-control" value="<?php echo htmlspecialchars($registration['department'] ?? ''); ?>">
+                                <input type="text" name="department" class="form-control" value="<?php echo htmlspecialchars($registration['department'] ?? ''); ?>" <?php echo isViewer() ? 'readonly' : ''; ?>>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label"><i class="fas fa-graduation-cap"></i> Batch</label>
-                                <input type="text" name="batch" class="form-control" value="<?php echo htmlspecialchars($registration['batch'] ?? ''); ?>">
+                                <input type="text" name="batch" class="form-control" value="<?php echo htmlspecialchars($registration['batch'] ?? ''); ?>" <?php echo isViewer() ? 'readonly' : ''; ?>>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label"><i class="fas fa-users"></i> Section</label>
-                                <input type="text" name="section" class="form-control" value="<?php echo htmlspecialchars($registration['section'] ?? ''); ?>">
+                                <input type="text" name="section" class="form-control" value="<?php echo htmlspecialchars($registration['section'] ?? ''); ?>" <?php echo isViewer() ? 'readonly' : ''; ?>>
                             </div>
                         </div>
                         
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="form-label"><i class="fas fa-ticket-alt"></i> Ticket Type</label>
-                                <select name="ticket_type" class="form-select" required>
+                                <select name="ticket_type" class="form-select" required <?php echo isViewer() ? 'disabled' : ''; ?>>
                                     <option value="Early Bird" <?php echo $registration['ticket_type'] === 'Early Bird' ? 'selected' : ''; ?>>Early Bird</option>
                                     <option value="Regular" <?php echo $registration['ticket_type'] === 'Regular' ? 'selected' : ''; ?>>Regular</option>
                                     <option value="VIP" <?php echo $registration['ticket_type'] === 'VIP' ? 'selected' : ''; ?>>VIP</option>
@@ -483,7 +504,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label"><i class="fas fa-flag"></i> Status</label>
-                                <select name="status" class="form-select" required>
+                                <select name="status" class="form-select" required <?php echo isViewer() ? 'disabled' : ''; ?>>
                                     <option value="pending" <?php echo $registration['status'] === 'pending' ? 'selected' : ''; ?>>Pending</option>
                                     <option value="confirmed" <?php echo $registration['status'] === 'confirmed' ? 'selected' : ''; ?>>Confirmed</option>
                                     <option value="cancelled" <?php echo $registration['status'] === 'cancelled' ? 'selected' : ''; ?>>Cancelled</option>
@@ -502,7 +523,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="form-label"><i class="fas fa-money-check"></i> Payment Method</label>
-                                <select name="payment_method" class="form-select" required>
+                                <select name="payment_method" class="form-select" required <?php echo isViewer() ? 'disabled' : ''; ?>>
                                     <option value="Bkash" <?php echo $registration['payment_method'] === 'Bkash' ? 'selected' : ''; ?>>Bkash</option>
                                     <option value="Nagad" <?php echo $registration['payment_method'] === 'Nagad' ? 'selected' : ''; ?>>Nagad</option>
                                     <option value="Rocket" <?php echo $registration['payment_method'] === 'Rocket' ? 'selected' : ''; ?>>Rocket</option>
@@ -511,14 +532,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label"><i class="fas fa-phone-square"></i> Payment Number</label>
-                                <input type="text" name="payment_number" class="form-control" value="<?php echo htmlspecialchars($registration['payment_number']); ?>">
+                                <input type="text" name="payment_number" class="form-control" value="<?php echo htmlspecialchars($registration['payment_number']); ?>" <?php echo isViewer() ? 'readonly' : ''; ?>>
                             </div>
                         </div>
                         
                         <div class="row mb-3">
                             <div class="col-md-12">
                                 <label class="form-label"><i class="fas fa-receipt"></i> Transaction ID</label>
-                                <input type="text" name="transaction_id" class="form-control" value="<?php echo htmlspecialchars($registration['transaction_id']); ?>" required>
+                                <input type="text" name="transaction_id" class="form-control" value="<?php echo htmlspecialchars($registration['transaction_id']); ?>" required <?php echo isViewer() ? 'readonly' : ''; ?>>
                             </div>
                         </div>
                         
@@ -531,18 +552,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
                 
                 <div class="card mt-4 border-primary">
                     <div class="card-body">
+                        <?php if (!isViewer()): ?>
                         <button type="submit" name="update_registration" class="btn btn-primary btn-lg">
                             <i class="fas fa-save"></i> Save Changes
                         </button>
                         <a href="registrations.php" class="btn btn-secondary btn-lg">
                             <i class="fas fa-times"></i> Cancel
                         </a>
+                        <?php else: ?>
+                        <p class="text-muted mb-0"><i class="fas fa-info-circle"></i> Viewers cannot edit registration data</p>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
             
             <!-- Quick Actions -->
             <div class="col-md-4">
+                <?php if (canDelete()): ?>
                 <div class="card no-print">
                     <div class="card-header bg-warning text-dark">
                         <h5 class="mb-0"><i class="fas fa-exclamation-triangle"></i> Danger Zone</h5>
@@ -554,8 +580,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
                         </button>
                     </div>
                 </div>
+                <?php endif; ?>
                 
-                <div class="card mt-4 no-print">
+                <div class="card <?php echo canDelete() ? 'mt-4' : ''; ?> no-print">
                     <div class="card-header">
                         <h5><i class="fas fa-info-circle"></i> Current Status</h5>
                     </div>
