@@ -7,44 +7,78 @@ if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true
     exit();
 }
 
+require_once '../config/database.php';
+require_once '../config/security.php';
+
+$db = new Database();
+$conn = $db->getConnection();
+$security = new SecurityLogger($conn);
+
+// Get client IP
+$clientIP = $security->getClientIP();
+
 // Handle login
 $error = '';
+$blocked = false;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'] ?? '';
-    $password = $_POST['password'] ?? '';
-    
-    require_once '../config/database.php';
-    $db = new Database();
-    $conn = $db->getConnection();
-    
-    // Check credentials from database
-    $stmt = $conn->prepare("SELECT * FROM admins WHERE username = :username AND password = :password AND status = 'active'");
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':password', $password);
-    $stmt->execute();
-    $admin = $stmt->fetch();
-    
-    if ($admin) {
-        // Update last login time
-        $updateStmt = $conn->prepare("UPDATE admins SET last_login = CURRENT_TIMESTAMP WHERE id = :id");
-        $updateStmt->bindParam(':id', $admin['id']);
-        $updateStmt->execute();
-        
-        $_SESSION['admin_logged_in'] = true;
-        $_SESSION['admin_username'] = $username;
-        $_SESSION['admin_id'] = $admin['id'];
-        $_SESSION['admin_role'] = $admin['role'];
-        $_SESSION['login_time'] = time();
-        
-        // Log login activity
-        require_once '../config/logger.php';
-        $logger = new ActivityLogger($conn);
-        $logger->log('Admin Login', 'Admin ' . $username . ' logged in', 'admin', $admin['id']);
-        
-        header('Location: dashboard.php');
-        exit();
+    // Check if IP is blocked FIRST
+    if ($security->isIPBlocked($clientIP)) {
+        $error = 'Your IP address has been blocked due to multiple failed login attempts. Please try again later.';
+        $blocked = true;
     } else {
-        $error = 'Invalid username or password';
+        // Sanitize inputs
+        $username = trim($_POST['username'] ?? '');
+        $password = $_POST['password'] ?? '';
+        
+        // Validate inputs are not empty
+        if (empty($username) || empty($password)) {
+            $error = 'Username and password are required';
+        } else {
+            // Use prepared statement to prevent SQL injection
+            // Note: Password should be hashed in production (password_hash/password_verify)
+            $stmt = $conn->prepare("SELECT * FROM admins WHERE username = :username AND status = 'active'");
+            $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+            $stmt->execute();
+            $admin = $stmt->fetch();
+            
+            // Verify password (using plain text comparison for now - should use password_verify in production)
+            if ($admin && $admin['password'] === $password) {
+                // Successful login
+                
+                // Update last login time
+                $updateStmt = $conn->prepare("UPDATE admins SET last_login = CURRENT_TIMESTAMP WHERE id = :id");
+                $updateStmt->bindParam(':id', $admin['id'], PDO::PARAM_INT);
+                $updateStmt->execute();
+                
+                // Set session variables
+                $_SESSION['admin_logged_in'] = true;
+                $_SESSION['admin_username'] = $username;
+                $_SESSION['admin_id'] = $admin['id'];
+                $_SESSION['admin_role'] = $admin['role'];
+                $_SESSION['login_time'] = time();
+                
+                // Log successful login activity
+                require_once '../config/logger.php';
+                $logger = new ActivityLogger($conn);
+                $logger->log('Admin Login', 'Admin ' . $username . ' logged in from IP: ' . $clientIP, 'admin', $admin['id']);
+                
+                header('Location: dashboard.php');
+                exit();
+            } else {
+                // Failed login - log the attempt
+                $wasBlocked = $security->logFailedAttempt($clientIP, $username, $password);
+                
+                if ($wasBlocked) {
+                    $error = 'Too many failed login attempts. Your IP has been blocked for 1 hour.';
+                    $blocked = true;
+                } else {
+                    $attemptCount = $security->getFailedAttemptCount($clientIP);
+                    $remaining = 3 - $attemptCount;
+                    $error = 'Invalid username or password. ' . ($remaining > 0 ? "You have {$remaining} attempt(s) remaining." : '');
+                }
+            }
+        }
     }
 }
 ?>
@@ -206,7 +240,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="login-container">
         <div class="login-header">
-            <img src="../assets/images/logo/cyber-security-club-logo.png" 
+            <img src="../assets/images/logo/cyber-security-club-logo-blue.png" 
                  alt="Cyber Security Club Logo" 
                  onerror="this.src='../assets/images/logo/CyberCon.png'">
             <h2>Admin Login</h2>

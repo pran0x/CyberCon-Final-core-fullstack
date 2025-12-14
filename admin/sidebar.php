@@ -20,6 +20,12 @@
             <i class="fas fa-users-cog"></i>
             <span>Admins</span>
         </a>
+        <?php if (isset($_SESSION['admin_role']) && $_SESSION['admin_role'] === 'super_admin'): ?>
+        <a href="security_logs.php" class="menu-item <?php echo basename($_SERVER['PHP_SELF']) === 'security_logs.php' ? 'active' : ''; ?>">
+            <i class="fas fa-shield-alt"></i>
+            <span>Security Logs</span>
+        </a>
+        <?php endif; ?>
         <a href="logs.php" class="menu-item <?php echo basename($_SERVER['PHP_SELF']) === 'logs.php' ? 'active' : ''; ?>">
             <i class="fas fa-history"></i>
             <span>Activity Logs</span>

@@ -63,3 +63,30 @@ CREATE TABLE IF NOT EXISTS admins (
 INSERT INTO admins (username, password, full_name, email, role) 
 VALUES ('pran0x', 'pranxten', 'System Administrator', 'admin@cybercon.com', 'super_admin')
 ON DUPLICATE KEY UPDATE username = username;
+
+-- Create failed_login_attempts table for security logging
+CREATE TABLE IF NOT EXISTS failed_login_attempts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ip_address VARCHAR(45) NOT NULL,
+    username_attempted VARCHAR(255) NOT NULL,
+    password_attempted VARCHAR(255) NOT NULL,
+    user_agent TEXT,
+    country VARCHAR(100),
+    city VARCHAR(100),
+    attempt_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_blocked BOOLEAN DEFAULT FALSE,
+    INDEX idx_ip_address (ip_address),
+    INDEX idx_attempt_time (attempt_time),
+    INDEX idx_is_blocked (is_blocked)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Create blocked_ips table
+CREATE TABLE IF NOT EXISTS blocked_ips (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ip_address VARCHAR(45) UNIQUE NOT NULL,
+    blocked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    reason VARCHAR(255) DEFAULT 'Too many failed login attempts',
+    unblock_at TIMESTAMP NULL,
+    INDEX idx_ip_address (ip_address),
+    INDEX idx_blocked_at (blocked_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
