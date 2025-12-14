@@ -305,56 +305,56 @@
                         'name' => 'Shahee Mirza',
                         'title' => 'Cybersecurity Entrepreneur',
                         'company' => 'CISO',
-                        'image' => 'https://media.licdn.com/dms/image/v2/D5603AQGUCGrhGpDZbw/profile-displayphoto-scale_200_200/B56ZpdhGcaJ4AY-/0/1762505552108?e=1764806400&v=beta&t=UsrFIa_zc_UqgYo2fQGkc9OOkaB5hMLeG5uUSzAYiOk',
+                        'image' => 'assets/images/Guest/saheeMirza.png',
                         'linkedin' => 'https://www.linkedin.com/in/shaheemirza/'
                     ],
                     [
                         'name' => 'A. B. M. Ahasan Ullah',
                         'title' => 'Vice President',
                         'company' => 'Al-Arafah Islami Bank PLC',
-                        'image' => 'https://media.licdn.com/dms/image/v2/C4D03AQE0sy318vuOLw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1517512087592?e=1764806400&v=beta&t=fDWYfpORy3IZRMb7Ry9ZVUCcyyRB-2dnDLFqjfOjWVA',
+                        'image' => 'assets/images/Guest/AhasanUllah.png',
                         'linkedin' => 'https://www.linkedin.com/in/ahasanullah/'
                     ],
                     [
                         'name' => 'Mohammad Abdullah',
                         'title' => 'AppSec Engineer',
                         'company' => 'Augmedix',
-                        'image' => 'https://media.licdn.com/dms/image/v2/D5603AQEOpNAwb-CVFQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1724986557235?e=1764806400&v=beta&t=WCAuPp3d4LjP9LFvyIfvgc7oJLnCqtE0iTWDgyJ2jI0',
-                        'linkedin' => 'https://www.linkedin.com/in/mohammad-abdullah/'
+                        'image' => 'assets/images/Guest/adbullah.png',
+                        'linkedin' => 'https://www.linkedin.com/in/abdul1ah/'
                     ],
                     [
                         'name' => 'Prial Islam',
                         'title' => 'Red Team Member',
                         'company' => 'Synack Red Team',
-                        'image' => 'https://media.licdn.com/dms/image/v2/D5603AQFruNOs5X7jfg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1664840776438?e=1764806400&v=beta&t=SvBpMPXHUbaXR2w2XCbzNZC2XeMC6aSV4tmOmBG8ULc',
+                        'image' => 'assets/images/Guest/prial.png',
                         'linkedin' => 'https://www.linkedin.com/in/0xprial/'
                     ],
                     [
                         'name' => 'Hasibul Hasan Shawon',
                         'title' => 'Associate Security Consultant',
                         'company' => 'SecureLayer7 | Synack | SecMiners',
-                        'image' => 'https://media.licdn.com/dms/image/v2/D4D03AQEWlyD23YOGOg/profile-displayphoto-crop_800_800/B4DZiaTBkUH8AI-/0/1754935338345?e=1764806400&v=beta&t=Ftl6EFOD9L1ly2l2kkmL4tiOxGlmlZmIxOn8IN3Tc0A',
+                        'image' => 'assets/images/Guest/shawon.png',
                         'linkedin' => 'https://www.linkedin.com/in/saiyan0x01/'
                     ],
                     [
                         'name' => 'Md Asif Hossain',
                         'title' => 'Security Researcher',
                         'company' => 'HackerOne | BugCrowd | Yogosha',
-                        'image' => 'https://media.licdn.com/dms/image/v2/D5603AQFV5JuQ286Kzw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1693626818532?e=1764806400&v=beta&t=rsy6erreFcQTfTJbvgrMzH6r20xDKstAk2vhMDd55D8',
+                        'image' => 'assets/images/Guest/asif.png',
                         'linkedin' => 'https://www.linkedin.com/in/0x0asif/'
                     ],
                     [
                         'name' => 'Alwoares Naeem',
                         'title' => 'CEO',
                         'company' => 'ZeroRisk Cyber Security',
-                        'image' => 'https://media.licdn.com/dms/image/v2/D5603AQElaU02UzvLyg/profile-displayphoto-shrink_200_200/B56ZRa36cLGQAY-/0/1736691395868?e=1764806400&v=beta&t=qmFfMNZe--QbuAOVtLciYV7U8Yy958FdG66BQkia1mU',
+                        'image' => 'assets/images/Guest/naeem.png',
                         'linkedin' => 'https://www.linkedin.com/in/a1woares/'
                     ],
                     [
                         'name' => 'Sadikul Islam Akash',
                         'title' => 'Red Team Researcher',
                         'company' => 'BEETLES CYBER SECURITY',
-                        'image' => 'https://media.licdn.com/dms/image/v2/D5603AQE0E0N9NGPGpQ/profile-displayphoto-scale_200_200/B56Ze8dBEcH8AY-/0/1751213413380?e=1764806400&v=beta&t=3pm9LdvUsJDy8q6Ro6d2eUnowrQrGP627Sm0jHt0LyI',
+                        'image' => 'assets/images/Guest/akash.png',
                         'linkedin' => 'https://www.linkedin.com/in/mdsadikulislam/'
                     ]
                 ];
