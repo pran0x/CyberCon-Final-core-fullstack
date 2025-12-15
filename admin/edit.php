@@ -81,7 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Database error: " . $e->getMessage();
     }
     }
-    }
 }
 ?>
 <!DOCTYPE html>

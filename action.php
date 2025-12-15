@@ -144,10 +144,6 @@ function handleRegistration() {
         'transactionId' => $transactionId,
         'ticketPrice' => $ticketPrice,
         'registrationDate' => date('Y-m-d H:i:s')
-        'paymentNumber' => $paymentNumber,
-        'transactionId' => $transactionId,
-        'ticketPrice' => $ticketPrice,
-        'registrationDate' => date('Y-m-d H:i:s')
     ));
     
     echo json_encode($response);
