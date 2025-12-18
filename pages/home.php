@@ -74,7 +74,7 @@
                     <img src="assets/images/Gallery/event1.jpg" alt="CyberCon Event">
                 </div>
                 <div class="slide">
-                    <img src="assets/images/Gallery/event2.jpg" alt="Conference Hall">
+                    <img src="assets/images/Gallery/event2.jpeg" alt="Conference Hall">
                 </div>
                 <div class="slide">
                     <img src="assets/images/Gallery/event3.jpg" alt="Speakers">

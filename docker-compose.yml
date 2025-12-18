@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  cybercon-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cybercon-app
+    ports:
+      - "6565:80"
+    volumes:
+      # Mount database directory to persist data
+      - ./database:/var/www/html/database
+      # Mount uploads directory to persist uploaded files
+      - ./uploads:/var/www/html/uploads
+      # Mount sent emails directory
+      - ./admin/sent_emails:/var/www/html/admin/sent_emails
+    environment:
+      - APACHE_RUN_USER=www-data
+      - APACHE_RUN_GROUP=www-data
+      - PHP_TIMEZONE=Asia/Dhaka
+    restart: unless-stopped
+    networks:
+      - cybercon-network
+
+networks:
+  cybercon-network:
+    driver: bridge
